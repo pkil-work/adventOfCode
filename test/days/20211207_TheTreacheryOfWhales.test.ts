@@ -13,7 +13,7 @@ describe("2021 Day 7 - The Treachery of Whales", () => {
         describe(".loadCrabPositionsFromFile", () => {
             it("overwrites the crabPositions from a file", () => {
                 let fuelCalculator: FuelCalculator = new FuelCalculator(exampleDataSet);
-                fuelCalculator.loadCrabPositionsFromFile("../resources/fileLoader-test-input.txt");
+                fuelCalculator.loadCrabPositionsFromFile("../../test/resources/fileLoader-test-input.txt");
                 expect(fuelCalculator.crabPositions).toEqual([1101, 1, 29, 67]);
             });
         });
@@ -23,13 +23,25 @@ describe("2021 Day 7 - The Treachery of Whales", () => {
             beforeEach(() => {
                 fuelCalculator = new FuelCalculator(exampleDataSet);
             });
-            it("returns 37 for the example data", () => {
-                expect(fuelCalculator.minimumFuelCost()).toEqual(37);
-            });
+            describe("when costs are linear", () => {
+                it("returns 37 for the example data", () => {
+                    expect(fuelCalculator.minimumFuelCost()).toEqual(37);
+                });
 
-            it("returns 339321 for the input data", () => {
-                fuelCalculator.loadCrabPositionsFromFile(inputDataSetFilePath);
-                expect(fuelCalculator.minimumFuelCost()).toEqual(339321);
+                it("returns 339321 for the input data", () => {
+                    fuelCalculator.loadCrabPositionsFromFile(inputDataSetFilePath);
+                    expect(fuelCalculator.minimumFuelCost()).toEqual(339321);
+                });
+            });
+            describe("when costs are not linear", () => {
+                it.skip("returns 168 for the example data", () => {
+                    expect(fuelCalculator.minimumFuelCost(false)).toEqual(168);
+                });
+
+                it("returns 339321 for the input data", () => {
+                    fuelCalculator.loadCrabPositionsFromFile(inputDataSetFilePath);
+                    expect(fuelCalculator.minimumFuelCost()).toEqual(339321);
+                });
             });
         });
 
@@ -140,20 +152,50 @@ describe("2021 Day 7 - The Treachery of Whales", () => {
 
         describe(".costsToMatchToEachPosition", () => {
             let expectedCostsForEachPosition: number[];
+            describe("when costs are linear", () => {
+                it("returns an array of linear costs with a small data set", () => {
+                    let fuelCalculator: FuelCalculator = new FuelCalculator([1, 2, 3]);
+                    expectedCostsForEachPosition = [3, 2, 3];
+                    expect(fuelCalculator.costsToMatchToEachPosition()).toEqual(expectedCostsForEachPosition);
+                });
+                it("returns an array of linear costs with a larger data set", () => {
+                    let fuelCalculator: FuelCalculator = new FuelCalculator([1, 3, 5, 7, 9]);
+                    expectedCostsForEachPosition = [20, 14, 12, 14, 20];
+                    expect(fuelCalculator.costsToMatchToEachPosition()).toEqual(expectedCostsForEachPosition);
+                });
+                it("returns an array of linear costs with the example data set", () => {
+                    let fuelCalculator: FuelCalculator = new FuelCalculator(exampleDataSet);
+                    expectedCostsForEachPosition = [111, 41, 37, 49, 41, 37, 53, 41, 37, 95];
+                    expect(fuelCalculator.costsToMatchToEachPosition()).toEqual(expectedCostsForEachPosition);
+                });
+            });
+            describe("when costs are not linear", () => {
+                it("returns an array of costs with a small data set", () => {
+                    let fuelCalculator: FuelCalculator = new FuelCalculator([1, 2, 3]);
+                    expectedCostsForEachPosition = [4, 2, 4];
+                    expect(fuelCalculator.costsToMatchToEachPosition(false)).toEqual(expectedCostsForEachPosition);
+                });
+                it("returns an array of costs with a larger data set", () => {
+                    let fuelCalculator: FuelCalculator = new FuelCalculator([1, 3, 5, 7, 9]);
+                    expectedCostsForEachPosition = [70, 37, 26, 37, 70];
+                    expect(fuelCalculator.costsToMatchToEachPosition(false)).toEqual(expectedCostsForEachPosition);
+                });
+                it("returns an array of costs with the example data set", () => {
+                    let fuelCalculator: FuelCalculator = new FuelCalculator(exampleDataSet);
+                    expectedCostsForEachPosition = [817,242,206,290,170,206,194,242,206,607];
+                    expect(fuelCalculator.costsToMatchToEachPosition(false)).toEqual(expectedCostsForEachPosition);
+                });
+            });
+        });
+
+        describe(".sumOfPrecedingValues", () => {
             it("returns an array of costs with a small data set", () => {
-                let fuelCalculator: FuelCalculator = new FuelCalculator([1, 2, 3]);
-                expectedCostsForEachPosition = [3, 2, 3];
-                expect(fuelCalculator.costsToMatchToEachPosition()).toEqual(expectedCostsForEachPosition);
+                let fuelCalculator: FuelCalculator = new FuelCalculator([]);
+                expect(fuelCalculator.sumOfPrecedingValues(3)).toEqual(3);
             });
-            it("returns an array of costs with a larger data set", () => {
-                let fuelCalculator: FuelCalculator = new FuelCalculator([1, 3, 5, 7, 9]);
-                expectedCostsForEachPosition = [20, 14, 12, 14, 20];
-                expect(fuelCalculator.costsToMatchToEachPosition()).toEqual(expectedCostsForEachPosition);
-            });
-            it("returns an array of costs with the example data set", () => {
-                let fuelCalculator: FuelCalculator = new FuelCalculator(exampleDataSet);
-                expectedCostsForEachPosition = [111, 41, 37, 49, 41, 37, 53, 41, 37, 95];
-                expect(fuelCalculator.costsToMatchToEachPosition()).toEqual(expectedCostsForEachPosition);
+            it("returns an array of costs with a small data set", () => {
+                let fuelCalculator: FuelCalculator = new FuelCalculator([]);
+                expect(fuelCalculator.sumOfPrecedingValues(5)).toEqual(10);
             });
         });
 

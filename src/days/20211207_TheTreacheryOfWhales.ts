@@ -34,8 +34,8 @@ export class FuelCalculator {
         return Math.max(...arrayOfNumbers);
     }
 
-    public costsToMatchToEachPosition(): number[] {
-        let arrayOfCosts = this.crabPositions.map(position => this.fuelCost(position));
+    public costsToMatchToEachPosition(linearCost: boolean = true): number[] {
+        let arrayOfCosts = this.crabPositions.map(position => linearCost ? this.fuelCost(position) : this.fuelCostIncreased(position) );
         return arrayOfCosts;
     }
 
@@ -53,7 +53,23 @@ export class FuelCalculator {
         return this.sumArray(distances);
     }
 
-    public minimumFuelCost(): number {
-        return this.minimumValue(this.costsToMatchToEachPosition());
+    public fuelCostIncreased(destination: number): number {
+        let distances: number[] = this.crabPositions.map((position: number) => {
+            let linearFuelCost = this.absoluteDistance(position, destination);
+            return linearFuelCost + this.sumOfPrecedingValues(linearFuelCost);
+        })
+        return this.sumArray(distances);
+    }
+
+    public sumOfPrecedingValues(topNumber: number): number {
+        let accumulator: number = 0;
+        for (let i: number = topNumber; i--; i < 0) {
+            accumulator += i;
+        }
+        return accumulator;
+    }
+
+    public minimumFuelCost(linearCost: boolean = true): number {
+        return this.minimumValue(this.costsToMatchToEachPosition(linearCost));
     }
 }

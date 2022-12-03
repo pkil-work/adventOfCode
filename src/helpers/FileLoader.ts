@@ -15,12 +15,20 @@ export class FileLoader {
         console.log(`Actual File Path: ${this.actualPath}`);
     }
 
-    private fileContent(): string {
-        return fs.readFileSync(this.actualPath, { encoding: 'utf-8' });
-    }
-    
     public csvToNumbers(): number[] {
         return this.fileContent().split(",").map(Number);
     }
     
+    public splitByLine(): string[] {
+        return this.fileContent().split('\n');
+    }
+    
+    public splitByBlankLine(): string[] {
+        return this.fileContent().split("\n\n");
+    }
+
+    // Private Methods
+    private fileContent(): string {
+        return fs.readFileSync(this.actualPath, { encoding: 'utf-8' });
+    }
 }
