@@ -19,11 +19,11 @@ describe("2022 Day 1 - Calorie Counting", () => {
                 counter.parseElves();
                 expect(counter.getMaximumElfCalorieValue()).toEqual(24000);
             });
-            it("returns 72240 for the input data set [PART 1 ANSWER]", () => {
+            it("returns 71124 for the input data set [PART 1 ANSWER]", () => {
                 let counter: CalorieCounter = new CalorieCounter(exampleStrings);
                 counter.loadCaloriesFromFile(inputDataSetFilePath);
                 counter.parseElves();
-                expect(counter.getMaximumElfCalorieValue()).toEqual(72240);
+                expect(counter.getMaximumElfCalorieValue()).toEqual(71124);
             });
         });
 
@@ -92,11 +92,11 @@ describe("2022 Day 1 - Calorie Counting", () => {
                 expect(counter.getTotalCaloriesCarriedByTopThreeElves()).toEqual(45000);
             });
 
-            it("returns 210957 for the input data set", () => {
+            it("returns 204639 for the input data set", () => {
                 let counter: CalorieCounter = new CalorieCounter(exampleStrings);
                 counter.loadCaloriesFromFile(inputDataSetFilePath);
                 counter.parseElves();
-                expect(counter.getTotalCaloriesCarriedByTopThreeElves()).toEqual(210957);
+                expect(counter.getTotalCaloriesCarriedByTopThreeElves()).toEqual(204639);
             });
         });
     });
