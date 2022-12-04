@@ -3,7 +3,7 @@ import { CalorieCounter } from "../../src/days/20221201_CalorieCounting";
 describe("2022 Day 1 - Calorie Counting", () => {
   const exampleStrings: string[] = ["hello", "goodbye", "ciao"];
   const exampleDataSetFilePath: string = "../resources/20221201-example.txt";
-  const inputSnippetFilePath: string = "../../test/resources/20221201-example2.txt";
+  const inputSnippetFilePath: string = "../resources/20221201-snippet.txt";
   const inputDataSetFilePath: string = "../resources/20221201-input.txt";
   const exampleElf: string = "7234\n3510\n7728\n1569\n";
 

@@ -1,4 +1,5 @@
 import { FileLoader } from "../helpers/FileLoader";
+import { minimumValueOfArray, maximumValueOfArray, sumArray } from "../helpers/mathsUtils";
 
 export class FuelCalculator {
   crabPositions: number[];
@@ -18,16 +19,8 @@ export class FuelCalculator {
     return Math.abs(destination - startPoint);
   }
 
-  public mean(): number {
-    return this.sumArray(this.crabPositions) / this.crabPositions.length;
-  }
-
-  public sumArray(arrayOfNumbers: number[]): number {
-    return arrayOfNumbers.reduce((accumulator, number) => accumulator + number, 0);
-  }
-
   public furthestRightPosition(arrayOfNumbers: number[]): number {
-    return Math.max(...arrayOfNumbers);
+    return maximumValueOfArray(arrayOfNumbers);
   }
 
   public costsToMatchToEachPosition(linearCost: boolean = true): number[] {
@@ -35,18 +28,14 @@ export class FuelCalculator {
     return arrayOfCosts;
   }
 
-  public minimumValue(arrayOfNumbers: number[]): number {
-    return Math.min(...arrayOfNumbers);
-  }
-
   public indexOfMinimumValue(arrayOfNumbers: number[]): number {
-    let minimumValue: number = this.minimumValue(arrayOfNumbers);
+    let minimumValue: number = minimumValueOfArray(arrayOfNumbers);
     return arrayOfNumbers.findIndex((number) => number === minimumValue);
   }
 
   public fuelCost(destination: number): number {
     let distances: number[] = this.crabPositions.map((position: number) => this.absoluteDistance(position, destination));
-    return this.sumArray(distances);
+    return sumArray(distances);
   }
 
   public fuelCostIncreased(destination: number): number {
@@ -54,7 +43,7 @@ export class FuelCalculator {
       let linearFuelCost = this.absoluteDistance(position, destination);
       return linearFuelCost + this.sumOfPrecedingValues(linearFuelCost);
     });
-    return this.sumArray(distances);
+    return sumArray(distances);
   }
 
   public sumOfPrecedingValues(topNumber: number): number {
@@ -66,6 +55,6 @@ export class FuelCalculator {
   }
 
   public minimumFuelCost(linearCost: boolean = true): number {
-    return this.minimumValue(this.costsToMatchToEachPosition(linearCost));
+    return minimumValueOfArray(this.costsToMatchToEachPosition(linearCost));
   }
 }
