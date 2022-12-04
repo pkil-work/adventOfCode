@@ -16,8 +16,6 @@ export class RockPaperScissors {
     loader: any;
     rounds: string[][];
     inputLines: string[];
-    elfCalories: number[][] = [];
-    elfCalorieTotals: number[] = [];
 
     shapeTable = {
         "A": ROCK,
@@ -66,7 +64,7 @@ export class RockPaperScissors {
         let desiredOutcome = this.desiredOutcomeTable[round[1]];
         let playerChoice: string;
         let opponentChoice: string = this.shapeTable[round[0]];
-        console.debug(`Desired Outcome: ${desiredOutcome}, Opponent Choice: ${opponentChoice}`);
+        
         if (desiredOutcome === WIN) {
             switch (opponentChoice) {
                 case ROCK: {
@@ -100,7 +98,6 @@ export class RockPaperScissors {
         } else if (desiredOutcome === DRAW) {
             playerChoice = opponentChoice;
         }
-        console.debug(`Player Choice: ${playerChoice}`);
         return playerChoice;
     }
 
