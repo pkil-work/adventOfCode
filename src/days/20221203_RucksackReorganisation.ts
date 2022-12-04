@@ -1,3 +1,4 @@
+import { groupIntoChunks } from "../helpers/arrayUtils";
 import { FileLoader } from "../helpers/FileLoader";
 import { sumArray } from "../helpers/mathsUtils";
 import { characterValues } from "../resources/characterValues";
@@ -68,19 +69,8 @@ export class RucksackReorganisation {
     return rucksacks.map((rucksack) => this.findRepeatedCharacter(rucksack));
   }
 
-  public groupIntoThrees(rucksacks: string[]): string[][] {
-    let rucksacksWorkingCopy: string[] = [...rucksacks];
-    let groupedRucksacks: string[][] = [];
-    let chunkSize: number = 3;
-    while (rucksacksWorkingCopy.length > 0) {
-      let chunk = rucksacksWorkingCopy.splice(0, chunkSize);
-      groupedRucksacks.push(chunk);
-    }
-    return groupedRucksacks;
-  }
-
   public mapRucksackGroupsToBadgeCharacter(rucksacks: string[]): string[] {
-    let rucksackGroups = this.groupIntoThrees(rucksacks);
+    let rucksackGroups = groupIntoChunks(rucksacks, 3) as string[][];
     return rucksackGroups.map((rucksackGroup) => this.findBadgeCharacter(rucksackGroup));
   }
 }

@@ -77,17 +77,6 @@ describe("2022 Day 3 - Rucksack Reorganisation", () => {
         expect(organiser.mapRucksacksToRepeatedCharacter(rucksackArray)).toEqual(["c", "j", "Q", "L"]);
       });
     });
-    describe(".groupIntoThrees", () => {
-      let organiser: RucksackReorganisation = new RucksackReorganisation();
-      it("returns an array of arrays of three strings", () => {
-        let rucksacks = ["111a11", "22a222", "3a3333", "4B4444", "55555B", "6666B6"];
-        let expectedOutput = [
-          ["111a11", "22a222", "3a3333"],
-          ["4B4444", "55555B", "6666B6"],
-        ];
-        expect(organiser.groupIntoThrees(rucksacks)).toEqual(expectedOutput);
-      });
-    });
     describe(".mapRucksackGroupsToBadgeCharacter", () => {
       let organiser: RucksackReorganisation = new RucksackReorganisation();
       it("returns an array of arrays of three strings", () => {
