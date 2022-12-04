@@ -1,67 +1,55 @@
 import { FileLoader } from "../helpers/FileLoader";
-import {
-    maximumValueOfArray,
-    sumArray
-} from "../helpers/mathsUtils";
+import { maximumValueOfArray, sumArray } from "../helpers/mathsUtils";
 
 export class CalorieCounter {
-    loader: any;
-    inputLines: string[];
-    elfCalories: number[][] = [];
-    elfCalorieTotals: number[] = [];
+  loader: any;
+  inputLines: string[];
+  elfCalories: number[][] = [];
+  elfCalorieTotals: number[] = [];
 
-    constructor(inputLines: string[], loader = FileLoader) {
-        this.inputLines = inputLines;
-        this.loader = loader;
-    }
+  constructor(inputLines: string[], loader = FileLoader) {
+    this.inputLines = inputLines;
+    this.loader = loader;
+  }
 
-    public displayLines(): void {
-        this.inputLines.forEach(line => console.log(line));
-    }
+  public getElfCalories(): number[][] {
+    return this.elfCalories;
+  }
 
-    public displayElfCalories(): void {
-        this.elfCalories.forEach(elf => console.log(elf));
-    }
+  public getElfCalorieTotals(): number[] {
+    return this.elfCalorieTotals;
+  }
 
-    public getElfCalories(): number[][] {
-        return this.elfCalories;
-    }
+  public getMaximumElfCalorieValue(): number {
+    return maximumValueOfArray(this.elfCalorieTotals);
+  }
 
-    public getElfCalorieTotals(): number[] {
-        return this.elfCalorieTotals;
-    }
+  public getTotalCaloriesCarriedByTopThreeElves(): number {
+    return sumArray(this.getTopThreeElves());
+  }
 
-    public getMaximumElfCalorieValue(): number {
-        return maximumValueOfArray(this.elfCalorieTotals);
-    }
+  public loadCaloriesFromFile(path: string) {
+    let fileLoader = new this.loader(path);
+    this.inputLines = fileLoader.splitByBlankLine();
+  }
 
-    public getTotalCaloriesCarriedByTopThreeElves(): number {
-        return sumArray(this.getTopThreeElves());
-    }
+  public convertElfCaloriesStringToNumbers(strings: string): number[] {
+    let elfCalories: number[];
+    let calorieArray = strings.split("\n");
+    elfCalories = calorieArray.map(Number);
+    return elfCalories;
+  }
 
-    public loadCaloriesFromFile(path: string) {
-        let fileLoader = new this.loader(path);
-        this.inputLines = fileLoader.splitByBlankLine();
-    }
+  public parseElves(): void {
+    this.elfCalories = this.inputLines.map(this.convertElfCaloriesStringToNumbers);
+    this.elfCalories.forEach((elf) => {
+      this.elfCalorieTotals.push(sumArray(elf));
+    });
+  }
 
-    public convertElfCaloriesStringToNumbers(strings: string): number[] {
-        let elfCalories: number[];
-        let calorieArray = strings.split("\n");
-        elfCalories = calorieArray.map(Number)
-        return elfCalories;
-    }
-
-    public parseElves(): void {
-        this.elfCalories = this.inputLines.map(this.convertElfCaloriesStringToNumbers);
-        this.elfCalories.forEach(elf => {
-            this.elfCalorieTotals.push(sumArray(elf));
-        })
-    }
-
-    public getTopThreeElves(): number[] {
-        let elvesSortedDescending = this.elfCalorieTotals;
-        elvesSortedDescending.sort((a, b) => b - a);
-        return elvesSortedDescending.slice(0, 3);
-    }
-
+  public getTopThreeElves(): number[] {
+    let elvesSortedDescending = this.elfCalorieTotals;
+    elvesSortedDescending.sort((a, b) => b - a);
+    return elvesSortedDescending.slice(0, 3);
+  }
 }
