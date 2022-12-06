@@ -7,3 +7,7 @@ export const groupIntoChunks = (array: (string | number)[], chunkSize: number): 
   }
   return returnGroups;
 };
+
+export const removeDuplicates = (array: (string | number)[]): (string | number)[] => {
+  return Array.from(new Set(array));
+};
