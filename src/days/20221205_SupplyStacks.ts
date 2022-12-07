@@ -1,3 +1,4 @@
+import { reverseArray } from "../helpers/arrayUtils";
 import { FileLoader } from "../helpers/FileLoader";
 
 export class SupplyStacks {
@@ -39,7 +40,7 @@ export class SupplyStacks {
     let endStackIndex: number = instruction[2] - 1;
 
     let pickedUpCrates = this.stacks[startStackIndex].splice(0, numberOfCrates);
-    let craneCargo: string[] = crateMover9001 ? pickedUpCrates : pickedUpCrates.reverse();
+    let craneCargo: string[] = crateMover9001 ? pickedUpCrates : (reverseArray(pickedUpCrates) as string[]);
     this.stacks[endStackIndex] = [...craneCargo, ...this.stacks[endStackIndex]];
   }
 

@@ -1,4 +1,4 @@
-import { groupIntoChunks, removeDuplicates } from "../../src/helpers/arrayUtils";
+import { groupIntoChunks, removeDuplicates, reverseArray } from "../../src/helpers/arrayUtils";
 
 describe("groupIntoChunks", () => {
   it("groups strings into fours  when given an array of strings and chunk size 4", () => {
@@ -37,5 +37,17 @@ describe("removeDuplicates", () => {
     let input = ["abc", "def", "abc", "ghi", "def", "jkl"];
     let expectedOutput = ["abc", "def", "ghi", "jkl"];
     expect(removeDuplicates(input)).toEqual(expectedOutput);
+  });
+});
+describe("reverseArray", () => {
+  it("returns an array of numbers in reverse order", () => {
+    let input = [1, 2, 3, 4, 5];
+    let expectedOutput = [5, 4, 3, 2, 1];
+    expect(reverseArray(input)).toEqual(expectedOutput);
+  });
+  it("returns an array of strings in reverse order", () => {
+    let input = ["abc", "def", "ghi", "jkl"];
+    let expectedOutput = ["jkl", "ghi", "def", "abc"];
+    expect(reverseArray(input)).toEqual(expectedOutput);
   });
 });

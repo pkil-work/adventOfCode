@@ -11,3 +11,7 @@ export const groupIntoChunks = (array: (string | number)[], chunkSize: number): 
 export const removeDuplicates = (array: (string | number)[]): (string | number)[] => {
   return Array.from(new Set(array));
 };
+
+export const reverseArray = (array: (string | number)[]): (string | number)[] => {
+  return array.reverse();
+};
