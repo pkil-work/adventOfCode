@@ -6,6 +6,8 @@ describe("2022 Day 5 - Supply Stacks", () => {
   const inputProcedureSnippetFilePath: string = "../resources/20221205-snippet-procedure.txt";
   const inputStacksFilePath: string = "../resources/20221205-input-stacks.txt";
   const inputProcedureFilePath: string = "../resources/20221205-input-procedure.txt";
+  const inputDataFilePath: string = "../resources/20221205-input.txt";
+  const exampleDataFilePath: string = "../resources/20221205-example.txt";
 
   describe("SupplyStacks", () => {
     describe(".loadStacks", () => {
@@ -13,6 +15,27 @@ describe("2022 Day 5 - Supply Stacks", () => {
         let crane: SupplyStacks = new SupplyStacks();
         crane.loadStacks(exampleStacksFilePath);
         expect(crane.stacks).toEqual([["N", "Z"], ["D", "C", "M"], ["P"]]);
+      });
+    });
+
+    describe(".loadInput", () => {
+      it("loads stacks and procedure", () => {
+        let crane: SupplyStacks = new SupplyStacks();
+        crane.loadInput(exampleDataFilePath);
+        expect(crane.procedure).toEqual([
+          [1, 2, 1],
+          [3, 1, 3],
+          [2, 2, 1],
+          [1, 1, 2],
+        ]);
+        expect(crane.stacks).toEqual([["N", "Z"], ["D", "C", "M"], ["P"]]);
+      });
+    });
+    describe(".parseStackDiagram", () => {
+      it("parses a string stack diagram into a matrix of crate characters", () => {
+        let crane: SupplyStacks = new SupplyStacks();
+        let exampleStackDiagram: string = "    [D]    \n[N] [C]    \n[Z] [M] [P]\n 1   2   3 ";
+        expect(crane.parseStackDiagram(exampleStackDiagram)).toEqual([["N", "Z"], ["D", "C", "M"], ["P"]]);
       });
     });
 

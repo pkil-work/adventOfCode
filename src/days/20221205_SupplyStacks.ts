@@ -5,9 +5,32 @@ export class SupplyStacks {
   inputLines: string[];
   procedure: number[][];
   stacks: string[][];
+  stackDiagram: string;
 
   constructor(loader = FileLoader) {
     this.loader = loader;
+  }
+
+  public loadInput(path: string): void {
+    let fileLoader = new this.loader(path);
+    let unsplitProcedure: string;
+    [this.stackDiagram, unsplitProcedure] = fileLoader.splitByBlankLine();
+    this.inputLines = unsplitProcedure.split("\n");
+    this.procedure = this.inputLines.map((line) => this.extractNumbers(line));
+    this.stacks = this.parseStackDiagram(this.stackDiagram);
+  }
+
+  public parseStackDiagram(stackDiagram: string): string[][] {
+    let stackLines: string[] = stackDiagram.split("\n");
+    stackLines.forEach((line) => {
+      console.debug(line);
+      console.debug(line.length);
+    });
+
+    return [
+      ["N", "O"],
+      ["W", "A", "Y"],
+    ];
   }
 
   public loadStacks(path: string): void {
