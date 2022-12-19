@@ -15,3 +15,7 @@ export const removeDuplicates = (array: (string | number)[]): (string | number)[
 export const reverseArray = (array: (string | number)[]): (string | number)[] => {
   return array.reverse();
 };
+
+export const countTrueValuesInArray = (array: boolean[]): number => {
+  return array.filter((value) => value).length;
+};

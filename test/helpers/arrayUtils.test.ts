@@ -1,4 +1,4 @@
-import { groupIntoChunks, removeDuplicates, reverseArray } from "../../src/helpers/arrayUtils";
+import { countTrueValuesInArray, groupIntoChunks, removeDuplicates, reverseArray } from "../../src/helpers/arrayUtils";
 
 describe("groupIntoChunks", () => {
   it("groups strings into fours  when given an array of strings and chunk size 4", () => {
@@ -49,5 +49,15 @@ describe("reverseArray", () => {
     let input = ["abc", "def", "ghi", "jkl"];
     let expectedOutput = ["jkl", "ghi", "def", "abc"];
     expect(reverseArray(input)).toEqual(expectedOutput);
+  });
+});
+describe("countTrueValuesInArray", () => {
+  it("returns a number representing the count of true values", () => {
+    let input = [true, false, true, false, true];
+    expect(countTrueValuesInArray(input)).toEqual(3);
+  });
+  it("returns 0 for no true values", () => {
+    let input = [false, false, false, false, false];
+    expect(countTrueValuesInArray(input)).toEqual(0);
   });
 });
