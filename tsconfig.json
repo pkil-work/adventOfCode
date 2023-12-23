@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "esModuleInterop": true,
-        "outDir": "build"
-    }
+        "outDir": "build",
+        "downlevelIteration": true
+    },
 }
