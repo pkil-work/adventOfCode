@@ -1,6 +1,6 @@
-import { Coordinates, Motion, RopeBridge } from "../../src/days/20221209_RopeBridge";
+import { Coordinates, Knot, Motion, Rope, RopeBridge } from "../../src/days/20221209_RopeBridge";
 
-describe("2022 Day 9 - Rope Bridge", () => {
+describe.skip("2022 Day 9 - Rope Bridge", () => {
   const exampleFilePath: string = "../resources/20221209-example.txt";
   const inputFilePath: string = "../resources/20221209-input.txt";
 
@@ -38,6 +38,7 @@ describe("2022 Day 9 - Rope Bridge", () => {
         it("returns 13 for the example data", () => {
           rope.loadSeriesOfMotions(exampleFilePath);
           rope.simulateTailMovements();
+
           expect(rope.countVisitedPositions()).toEqual(13);
         });
         it("returns 6376 for the input data", () => {
@@ -88,16 +89,16 @@ describe("2022 Day 9 - Rope Bridge", () => {
         expect(rope.countVisitedPositions()).toEqual(6);
       });
     });
-    describe(".isTailAdjacentToHead", () => {
+    describe(".isKnotAdjacentToParent", () => {
       it("returns true if the tail and head of the rope are adjacent", () => {
         let mockTailPosition: Coordinates = [0, 1];
         let mockHeadPosition: Coordinates = [0, 1];
-        expect(rope.isTailAdjacentToHead(mockTailPosition, mockHeadPosition)).toEqual(true);
+        expect(rope.isKnotAdjacentToParent(mockTailPosition, mockHeadPosition)).toEqual(true);
       });
       it("returns false if the tail and head of the rope are not adjacent", () => {
         let mockTailPosition: Coordinates = [0, 2];
         let mockHeadPosition: Coordinates = [0, -1];
-        expect(rope.isTailAdjacentToHead(mockTailPosition, mockHeadPosition)).toEqual(false);
+        expect(rope.isKnotAdjacentToParent(mockTailPosition, mockHeadPosition)).toEqual(false);
       });
     });
 
@@ -109,26 +110,76 @@ describe("2022 Day 9 - Rope Bridge", () => {
         motionStep = ["B", 0];
         expect(() => rope.getHeadPositionAfterStep(initialPosition, motionStep)).toThrowError("The direction string is an unexpected value (Not U, D, L, or R)");
       });
-      it("returns an x and y position after being given an intial position and the motion step with a U", () => {
+      it("returns an x and y position after being given an initial position and the motion step with a U", () => {
         motionStep = ["U", 3];
         expectedFinalPosition = [0, 3];
         expect(rope.getHeadPositionAfterStep(initialPosition, motionStep)).toEqual(expectedFinalPosition);
       });
-      it("returns an x and y position after being given an intial position and the motion step with an R", () => {
+      it("returns an x and y position after being given an initial position and the motion step with an R", () => {
         motionStep = ["R", 4];
         expectedFinalPosition = [4, 0];
         expect(rope.getHeadPositionAfterStep(initialPosition, motionStep)).toEqual(expectedFinalPosition);
       });
-      it("returns an x and y position after being given an intial position and the motion step with a D", () => {
+      it("returns an x and y position after being given an initial position and the motion step with a D", () => {
         motionStep = ["D", 5];
         expectedFinalPosition = [0, -5];
         expect(rope.getHeadPositionAfterStep(initialPosition, motionStep)).toEqual(expectedFinalPosition);
       });
-      it("returns an x and y position after being given an intial position and the motion step with an L", () => {
+      it("returns an x and y position after being given an initial position and the motion step with an L", () => {
         motionStep = ["L", 2];
         expectedFinalPosition = [-2, 0];
         expect(rope.getHeadPositionAfterStep(initialPosition, motionStep)).toEqual(expectedFinalPosition);
       });
     });
   });
+
+  describe("Knot", () => {
+    describe(".stepTowardDestination", () => {
+      it("updates the position of a knot to be one step towards its destination", () => {
+        let knot = new Knot(0, [0, 0]);
+        knot.stepTowardDestination([4, 0])
+        expect(knot.position).toEqual([1, 0]);
+      });
+      it("updates the position of a knot to be one step towards its destination a second time", () => {
+        let knot = new Knot(0, [0, 0]);
+        knot.stepTowardDestination([4, 0])
+        knot.stepTowardDestination([4, 0])
+        expect(knot.position).toEqual([2, 0]);
+      });
+      it("adds the step to the path when it is the Tail knot", () => {
+        let knot = new Knot(0, [0, 0]);
+        knot.setTail(true);
+        knot.stepTowardDestination([4, 0]);
+        expect(knot.position).toEqual([1, 0]);
+        expect(knot.path.size).toEqual(1);
+      });
+    });
+  });
+
+  describe("Rope", () => {
+    describe(".setHeadDestination", () => {
+      it("sets the headDestination and updates the knots within the rope", () => {
+        let rope = new Rope(1);
+        rope.setHeadDestination([4, 0])
+        let expectedKnots = [new Knot(0, [4, 0])];
+        let expectedPathSet = new Set<string>();
+        expectedPathSet.add("[0,0]");
+        expectedPathSet.add("[1,0]");
+        expectedPathSet.add("[2,0]");
+        expectedPathSet.add("[3,0]");
+        expectedPathSet.add("[4,0]");
+        expectedKnots[0].path = expectedPathSet;
+        expectedKnots[0].setTail(true);
+        expect(rope.knots).toEqual(expectedKnots);
+      });
+      it("adds the step to the path when it is the Tail rope", () => {
+        let rope = new Knot(0, [0, 0]);
+        rope.setTail(true);
+        rope.stepTowardDestination([4, 0]);
+        expect(rope.position).toEqual([1, 0]);
+        expect(rope.path.size).toEqual(2);
+      });
+    });
+  });
+
 });

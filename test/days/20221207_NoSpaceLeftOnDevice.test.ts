@@ -62,7 +62,7 @@ describe("2022 Day 7 - No Space Left on Device", () => {
       });
     });
     describe(".replaceSubDirectoriesWithContent", () => {
-      it("does somehting I guess", () => {
+      it("does something I guess", () => {
         let scanner: NoSpaceOnDevice = new NoSpaceOnDevice();
         let expectedDirectories = {
           a: ["584 i", "29116 f", "2557 g", "62596 h.lst"],
